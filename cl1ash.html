@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Clash Royale Web HTML</title>
+    <style>
+        :root { --cr-blue: #3498db; --cr-red: #e74c3c; --cr-gold: #f1c40f; --cr-dark: #2c3e50; }
+        body { margin: 0; font-family: 'Arial Black', sans-serif; background: #000; overflow: hidden; color: white; }
+        
+        /* SCENE MANAGEMENT */
+        .scene { display: none; width: 100vw; height: 100vh; position: relative; }
+        .active { display: flex; flex-direction: column; }
+
+        /* HOME SCREEN UI */
+        #home-screen { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://wallpaperaccess.com'); background-size: cover; justify-content: space-between; align-items: center; }
+        .top-bar { width: 100%; display: flex; justify-content: space-around; padding: 10px; background: rgba(0,0,0,0.6); }
+        .battle-btn { width: 200px; height: 80px; background: #ff9d00; border: 5px solid #fff; border-radius: 15px; font-size: 24px; color: white; cursor: pointer; box-shadow: 0 5px #c67a00; margin-bottom: 50px; }
+        .battle-btn:active { transform: translateY(3px); box-shadow: 0 2px #c67a00; }
+
+        /* ARENA UI */
+        #arena-screen { background: #27ae60; background-image: radial-gradient(#2ecc71 20%, transparent 20%); background-size: 40px 40px; }
+        .tower { position: absolute; width: 50px; height: 50px; border-radius: 5px; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+        .enemy { background: var(--cr-red); }
+        .player { background: var(--cr-blue); }
+        
+        /* TOWER POSITIONS */
+        #e-king { top: 20px; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; }
+        #e-p1 { top: 80px; left: 20%; }
+        #e-p2 { top: 80px; right: 20%; }
+        #p-king { bottom: 100px; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; }
+        #p-p1 { bottom: 160px; left: 20%; }
+        #p-p2 { bottom: 160px; right: 20%; }
+
+        /* DECK / ELIXIR */
+        #ui-layer { position: absolute; bottom: 0; width: 100%; height: 90px; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: space-around; }
+        .card { width: 60px; height: 80px; background: var(--cr-gold); border-radius: 5px; color: black; font-size: 10px; text-align: center; cursor: pointer; }
+        #elixir-bar { position: absolute; bottom: 90px; height: 10px; background: #e056fd; width: 100%; transition: width 0.1s; }
+    </style>
+</head>
+<body>
+
+    <!-- HOME SCREEN -->
+    <div id="home-screen" class="scene active">
+        <div class="top-bar">
+            <span>Gold: 10,000</span>
+            <span>Gems: 500</span>
+        </div>
+        <button class="battle-btn" onclick="startBattle()">BATTLE</button>
+    </div>
+
+    <!-- ARENA SCREEN -->
+    <div id="arena-screen" class="scene">
+        <!-- Enemy Towers -->
+        <div class="tower enemy" id="e-king">KING</div>
+        <div class="tower enemy" id="e-p1">P1</div>
+        <div class="tower enemy" id="e-p2">P2</div>
+
+        <!-- Player Towers -->
+        <div class="tower player" id="p-king">KING</div>
+        <div class="tower player" id="p-p1">P1</div>
+        <div class="tower player" id="p-p2">P2</div>
+
+        <div id="elixir-bar" style="width: 0%"></div>
+        <div id="ui-layer">
+            <div class="card" onclick="spawnUnit('Knight')">Knight<br>3💧</div>
+            <div class="card" onclick="spawnUnit('Giant')">Giant<br>5💧</div>
+            <div class="card" onclick="spawnUnit('Archer')">Archer<br>3💧</div>
+        </div>
+    </div>
+
+    <script>
+        let elixir = 0;
+
+        function startBattle() {
+            document.getElementById('home-screen').classList.remove('active');
+            document.getElementById('arena-screen').classList.add('active');
+            setInterval(updateElixir, 1000);
+        }
+
+        function updateElixir() {
+            if (elixir < 10) {
+                elixir += 1;
+                document.getElementById('elixir-bar').style.width = (elixir * 10) + '%';
+            }
+        }
+
+        function spawnUnit(type) {
+            let cost = type === 'Giant' ? 5 : 3;
+            if (elixir >= cost) {
+                elixir -= cost;
+                alert('Spawning ' + type + '! (Logic: Unit moves to nearest Enemy Tower)');
+            } else {
+                alert('Not enough Elixir!');
+            }
+        }
+    </script>
+</body>
+</html>
