@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clash Royale Lite</title>
+    <style>
+        body { background: #2c3e50; display: flex; justify-content: center; margin: 0; }
+        #game-container { position: relative; width: 400px; height: 600px; border: 5px solid #ecf0f1; background: #27ae60; }
+        .tower { position: absolute; width: 40px; height: 40px; background: #e74c3c; border-radius: 5px; }
+        #player-king { bottom: 20px; left: 180px; }
+        #enemy-king { top: 20px; left: 180px; }
+        #deck { position: absolute; bottom: -80px; width: 100%; display: flex; justify-content: space-around; }
+        .card { width: 60px; height: 80px; background: #f1c40f; border: 2px solid #000; text-align: center; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <!-- Enemy Towers -->
+        <div class="tower" id="enemy-king"></div>
+        <!-- Player Towers -->
+        <div class="tower" id="player-king"></div>
+        
+        <div id="deck">
+            <div class="card">Knight</div>
+            <div class="card">Archer</div>
+            <div class="card">Giant</div>
+        </div>
+    </div>
+</body>
+</html>
