@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clash Royale - AI & Movement Fixed</title>
+    <style>
+        :root { --tile: 18px; --w: calc(var(--tile) * 18); --h: calc(var(--tile) * 32); }
+        body { margin: 0; background: #000; display: flex; flex-direction: column; align-items: center; color: white; font-family: sans-serif; }
+        #arena { width: var(--w); height: var(--h); background: #27ae60; position: relative; border: 3px solid #fff; overflow: hidden; background-image: linear-gradient(#2ecc71 1px, transparent 1px), linear-gradient(90deg, #2ecc71 1px, transparent 1px); background-size: var(--tile) var(--tile); }
+        .river { position: absolute; top: 50%; width: 100%; height: calc(var(--tile) * 2); background: #2980b9; transform: translateY(-50%); }
+        .entity { position: absolute; width: calc(var(--tile)*2); height: calc(var(--tile)*2); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: bold; z-index: 5; }
+        .tower { width: calc(var(--tile)*3); height: calc(var(--tile)*3); border: 2px solid gold; z-index: 10; }
+        .blue { background: #3498db; } .red { background: #e74c3c; }
+        #deck { margin-top: 10px; display: flex; gap: 10px; }
+        .card { width: 60px; height: 80px; background: gold; color: #000; border-radius: 5px; text-align: center; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="arena" onclick="playerPlace(event)">
+        <div class="river"></div>
+        <!-- Towers -->
+        KING</div>
+        KING</div>
+    </div>
+    <div id="deck">
+        <div class="card" onclick="sel('Knight', 3)">Knight<br>3💧</div>
+        <div class="card" onclick="sel('Giant', 5)">Giant<br>5💧</div>
+    </div>
+
+<script>
+    const arena = document.getElementById('arena');
+    const tile = 18;
+    let playerElixir = 5;
+    let enemyElixir = 5;
+    let selected = null;
+    let units = [];
+
+    function sel(t, c) { selected = { t, c }; }
+
+    function playerPlace(e) {
+        if (!selected || playerElixir  {
+            u.y += u.speed; // Blue moves UP (-), Red moves DOWN (+)
+            u.el.style.top = u.y + 'px';
+        });
+
+        // 2. Simple AI Bot Logic
+        if (enemyElixir >= 5) {
+            enemyElixir -= 5;
+            // Spawn random unit at top bridge
+            spawn(Math.random() > 0.5 ? 54 : 234, 40, 'red', 'Bot-Giant');
+        }
+
+        requestAnimationFrame(gameLoop);
+    }
+
+    // Elixir Regen
+    setInterval(() => { if(playerElixir < 10) playerElixir++; if(enemyElixir < 10) enemyElixir++; }, 2000);
+    gameLoop();
+</script>
+</body>
+</html>
